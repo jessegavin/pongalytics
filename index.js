@@ -50,11 +50,11 @@ function processSpreadsheet(err, rows, info) {
     })
     .valueOf();
 
-
   var players = {};
 
   function player(name) {
     this.name = name;
+    this.opponents = {};
     this.games = [];
   }
 
@@ -86,7 +86,7 @@ function processSpreadsheet(err, rows, info) {
     };
   }
 
-  _.each(data, function(game) {
+  _.forEach(data, function(game) {
     var player1 = getPlayer(game.player1_name);
     player1.games.push(transformGame(game, "player1", "player2"));
 
@@ -95,8 +95,32 @@ function processSpreadsheet(err, rows, info) {
   });
 
 
+  _.forEach(players, function(player, name) {
+    var opponents = _.groupBy(player.games, "opponentName");
+    _.forEach(opponents, function(games, opponent) {
+      var start = { games: 0, wins: 0, losses: 0, points: 0, aces: 0, opponentPoints: 0, opponentAces: 0 };
+      player.opponents[opponent] = _.reduce(games, function(result, game) {
+        result.games++;
+        result.wins += game.score > game.opponentScore ? 1 : 0;
+        result.losses += game.score < game.opponentScore ? 1 : 0;
+        result.points += game.score;
+        result.aces += game.aces;
+        result.opponentPoints += game.opponentScore;
+        result.opponentAces += game.opponentAces;
+        return result;
+      }, start);
+    })
+  });
 
-  console.log(players);
+
+
+
+  console.log(JSON.stringify(players, null, 2));
+
+
+
+
+
   console.dir(info);
 }
 
