@@ -52,21 +52,20 @@ function processSpreadsheet(err, rows, info) {
 
   var players = {};
 
-  function player(name) {
-    this.name = name;
+  function player() {
     this.opponents = {};
     this.games = [];
   }
 
   function getPlayer(name) {
     if (!players[name]) {
-      players[name] = new player(name);
+      players[name] = new player();
     }
     return players[name];
   }
 
   function getNumber(value) {
-    if (_.isEmpty(value)) {
+    if (_.isUndefined(value)) {
       return 0;
     }
     var parsed = parseInt(value, 10);
@@ -111,10 +110,7 @@ function processSpreadsheet(err, rows, info) {
       }, start);
     })
   });
-
-
-
-
+  
   console.log(JSON.stringify(players, null, 2));
 
 
