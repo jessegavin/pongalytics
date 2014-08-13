@@ -1,0 +1,10 @@
+
+.table-stats caption {
+    font-size: 18px;
+}
+.table-stats tbody td {
+    text-align: right;
+}
+.table-stats tbody th {
+    text-align: right;
+}

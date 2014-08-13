@@ -1,0 +1,53 @@
+
+{{#players}}
+    <table class="table table-condensed table-stats">
+        <caption>{{name}}</caption>
+        <thead>
+            <tr>
+                <th></th>
+                <th>Games Played</th>
+                <th>Wins</th>
+                <th>Losses</th>
+                <th>Total Aces</th>
+                <th>Total Points</th>
+                <th>Aces Allowed</th>
+                <th>Points Allowed</th>
+                <th>Win Percentage</th>
+                <th>Points Per Game</th>
+                <th>Point Percentage</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="highlighted">
+                <th>Total</th>
+                <td>{{stats.games}}</td>
+                <td>{{stats.wins}}</td>
+                <td>{{stats.losses}}</td>
+                <td>{{stats.aces}}</td>
+                <td>{{stats.points}}</td>
+                <td>{{stats.opponentAces}}</td>
+                <td>{{stats.opponentPoints}}</td>
+                <td>{{percentage stats.winPercentage}}</td>
+                <td>{{decimal stats.pointsPerGame}}</td>
+                <td>{{numeric stats.pointDifferential}}</td>
+            </tr>
+        {{#opponents}}
+            <tr>
+                <th>{{opponentName}}</th>
+                <td>{{games}}</td>
+                <td>{{wins}}</td>
+                <td>{{losses}}</td>
+                <td>{{aces}}</td>
+                <td>{{points}}</td>
+                <td>{{opponentAces}}</td>
+                <td>{{opponentPoints}}</td>
+                <td>{{percentage winPercentage}}</td>
+                <td>{{decimal pointsPerGame}}</td>
+                <td>{{numeric pointDifferential}}</td>
+            </tr>
+        {{/opponents}}
+        </tbody>
+    </table>
+{{/players}}
+</body>
+</html>

@@ -11,6 +11,13 @@
   "dependencies": {
     "edit-google-spreadsheet": "^0.2.6",
     "lodash": "^2.4.1",
-    "moment": "^2.8.1"
+    "moment": "^2.8.1",
+    "q": "^1.0.1",
+    "express3-handlebars": "^0.5.2",
+    "numeral": "^1.5.3",
+    "express": "^4.8.3"
+  },
+  "engines": {
+    "node": "0.10.x"
   }
 }
