@@ -22,16 +22,23 @@ var hbs = exphbs.create({
 
 app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
-app.set('views', './views')
+app.set('views', './views');
+app.use(express.static(__dirname + '/public'));
 
 app.get('/', function(req, res) {
-    getData()
+    getData(req.query.forceRefresh)
         .then(function(data) {
 
             var viewModel = {
-                players: _.map(data.players, function(p, name) {
-                    return _.assign(p, { name: name });
-                })
+                players: _.chain(data.players)
+                          .map(function(p, name) {
+                            return _.assign(p, { name: name });
+                          })
+                          .sortBy(function(p) {
+                            console.log(p.stats.winPercentage);
+                            return 0-p.stats.winPercentage;
+                          })
+                          .valueOf()
             };
 
             res.render('home', viewModel);
