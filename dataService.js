@@ -27,18 +27,18 @@ function processSpreadsheet(err, rows, info) {
         deferred.reject(err);
     }
 
+
+
     var numberOfHeaderRows = 2;
 
     var columns = {
-        "game_number": "1",
-        "game_date": "2",
-        "player1_name": "3",
-        "player1_score": "4",
-        "player1_aces": "5",
-        "player2_name": "6",
-        "player2_score": "7",
-        "player2_aces": "8",
-        "winning_side": "9"
+        "game_date": "1",
+        "player1_name": "2",
+        "player1_score": "3",
+        "player1_aces": "4",
+        "player2_name": "5",
+        "player2_score": "6",
+        "player2_aces": "7"
     };
 
     var data = _.chain(rows)
