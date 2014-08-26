@@ -1,0 +1,26 @@
+
+body {
+  padding: 25px;
+}
+
+.table-stats,
+.table-stats th,
+.table-stats td {
+  border-color: #777;
+}
+
+.table-stats caption {
+  background: #777;
+  color: #fff;
+  text-align: left;
+  padding: .25em 1em;
+  border: solid 1px #777;
+}
+
+.table-stats thead {
+  font-size: 11px;
+}
+
+.highlighted {
+  background: #f3f3f3;
+}
