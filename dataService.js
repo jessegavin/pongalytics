@@ -10,8 +10,8 @@ var spreadsheetOptions = {
     spreadsheetId: "1oT_G_vwbiYuh17TJhdsymFp8-ONbDMS2NckTGJtCZOE",
     worksheetName: 'Scores',
     oauth : {
-        email: "780272229048-had28ms0egrbau5vsk8nh330jbukos9j@developer.gserviceaccount.com",
-        keyFile: './private/pongalytics.pem'
+        email: process.env.DRIVE_USER,
+        key: process.env.PEM_KEY
     }
 };
 
