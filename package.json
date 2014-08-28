@@ -10,6 +10,7 @@
   "license": "MIT",
   "dependencies": {
     "edit-google-spreadsheet": "^0.2.6",
+    "elo-rank": "^0.2.2",
     "express": "^4.8.3",
     "express3-handlebars": "^0.5.2",
     "lodash": "^2.4.1",

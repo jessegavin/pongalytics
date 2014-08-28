@@ -35,8 +35,7 @@ app.get('/', function(req, res) {
                             return _.assign(p, { name: name });
                           })
                           .sortBy(function(p) {
-                            console.log(p.stats.winPercentage);
-                            return 0-p.stats.winPercentage;
+                            return 0-p.rank;
                           })
                           .valueOf()
             };

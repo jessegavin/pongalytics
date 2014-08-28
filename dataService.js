@@ -1,10 +1,12 @@
 var Q = require("q");
 var _ = require("lodash");
+var elo = require('elo-rank')();
 var moment = require("moment");
 var Spreadsheet = require('edit-google-spreadsheet');
 
 var deferred;
 
+console.log(process.env);
 var spreadsheetOptions = {
     debug: true,
     spreadsheetId: "1oT_G_vwbiYuh17TJhdsymFp8-ONbDMS2NckTGJtCZOE",
@@ -54,6 +56,7 @@ function processSpreadsheet(err, rows, info) {
     var players = {};
 
     function player() {
+        this.rank = 1000;
         this.opponents = [];
         this.games = [];
     }
@@ -112,6 +115,15 @@ function processSpreadsheet(err, rows, info) {
 
         var player2 = getPlayer(game.player2_name);
         player2.games.push(transformGame(game, "player2", "player1"));
+
+        //Gets expected score for first parameter
+        var expectedScore1 = elo.getExpected(player1.rank,player2.rank);
+        var expectedScore2 = elo.getExpected(player2.rank,player1.rank);
+
+        var actualScore1 = game.player1_score > game.player2_score ? 1 : 0;
+        var actualScore2 = game.player2_score > game.player1_score ? 1 : 0;
+        player1.rank = elo.updateRating(expectedScore1,actualScore1,player1.rank);
+        player2.rank = elo.updateRating(expectedScore2,actualScore2,player2.rank);
     });
 
     _.forEach(players, function(player) {
