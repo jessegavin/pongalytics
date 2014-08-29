@@ -9,14 +9,15 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "MD5": "^1.2.1",
+    "bluebird": "^2.3.2",
     "edit-google-spreadsheet": "^0.2.6",
     "elo-rank": "^0.2.2",
     "express": "^4.8.3",
     "express3-handlebars": "^0.5.2",
     "lodash": "^2.4.1",
     "moment": "^2.8.1",
-    "numeral": "^1.5.3",
-    "q": "^1.0.1"
+    "numeral": "^1.5.3"
   },
   "engines": {
     "node": "0.10.x"

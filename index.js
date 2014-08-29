@@ -1,5 +1,4 @@
-var _ = require('lodash');
-var getData = require('./dataCache');
+var viewmodel = require('./viewmodel');
 var express = require('express');
 var exphbs  = require('express3-handlebars');
 var numeral  = require('numeral');
@@ -26,24 +25,13 @@ app.set('views', './views');
 app.use(express.static(__dirname + '/public'));
 
 app.get('/', function(req, res) {
-    getData(req.query.forceRefresh)
-        .then(function(data) {
-
-            var viewModel = {
-                players: _.chain(data.players)
-                          .map(function(p, name) {
-                            return _.assign(p, { name: name });
-                          })
-                          .sortBy(function(p) {
-                            return 0-p.rank;
-                          })
-                          .valueOf()
-            };
-
-            res.render('home', viewModel);
-        }, function(error) {
-            res.status(500).body(error);
-        });
+  viewmodel(req.query.bypassCache)
+    .then(function(model) {
+        res.render('home', model);
+    })
+    .catch(function(error) {
+      throw error;
+    });
 });
 
 app.listen(process.env.PORT || 8080);
