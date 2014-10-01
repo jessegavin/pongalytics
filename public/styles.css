@@ -24,3 +24,75 @@ body {
 .highlighted {
   background: #f3f3f3;
 }
+
+
+
+
+#chart_container {
+    position: relative;
+    margin-bottom: 20px;
+}
+#chart {
+    position: relative;
+    left: 40px;
+    width: 600px;
+}
+#y_axis {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 40px;
+}
+
+#legend {
+    text-align: left;
+    padding-left: 50px;
+    padding-bottom: 10px;
+}
+
+#datetime {
+    min-width: 150px;
+    text-align:right;
+}
+
+.legend-item,
+.legend-item > span {
+    display: inline-block;
+}
+
+.legend-item__swatch {
+    width: 10px;
+    height: 10px;
+    margin-right: 8px;
+    margin-left: 20px;
+    border-radius: 20px;
+}
+
+.legend-item__name {
+    margin-right: 8px;
+}
+
+.legend-item__value {
+}
+
+.axis path,
+.axis line {
+    fill: none;
+    stroke: #000;
+    shape-rendering: crispEdges;
+}
+
+/*.x.axis path {*/
+    /*display: none;*/
+/*}*/
+
+.line {
+    fill: none;
+    stroke: steelblue;
+    stroke-width: 1.5px;
+}
+
+
+.rickshaw_graph .detail {
+    background: #333;
+}

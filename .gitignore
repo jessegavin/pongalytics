@@ -3,3 +3,4 @@ node_modules
 private
 cache.json
 .env
+bower_components

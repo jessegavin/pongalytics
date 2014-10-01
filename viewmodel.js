@@ -14,7 +14,8 @@ module.exports = function(bypassCache) {
 
   return getScores()
     .then(function(data) {
-      return _.assign(cache, {
+
+      _.assign(cache, {
         players: _.chain(data.players)
           .map(function(p, name) {
             return _.assign(p, { name: name });
@@ -25,6 +26,8 @@ module.exports = function(bypassCache) {
           .valueOf(),
         timestamp: new Date()
       });
+
+      return cache;
     });
 }
 

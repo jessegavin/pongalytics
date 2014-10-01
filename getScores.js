@@ -8,9 +8,6 @@ var spreadsheet = require('./spreadsheet');
 
 function processSpreadsheet(players, scoreData) {
 
-  console.log("players", players);
-  console.log("scoreData", scoreData);
-
   var info = scoreData.info;
   var numberOfHeaderRows = 2;
 
@@ -48,7 +45,7 @@ function processSpreadsheet(players, scoreData) {
   }
 
   function buildStats(games) {
-    var stats = { games: 0, wins: 0, losses: 0, points: 0, aces: 0, opponentPoints: 0, opponentAces: 0 };
+    var stats = { games: 0, wins: 0, overtimeWins: 0, losses: 0, points: 0, aces: 0, opponentPoints: 0, opponentAces: 0 };
     var result = _.reduce(games, function (result, game) {
       result.games++;
       result.wins += game.score > game.opponentScore ? 1 : 0;
@@ -69,18 +66,19 @@ function processSpreadsheet(players, scoreData) {
 
   _.forEach(data, function (game) {
     var player1 = players[game.player1_name];
-    player1.games.push(transformGame(game, "player1", "player2"));
-
     var player2 = players[game.player2_name];
-    player2.games.push(transformGame(game, "player2", "player1"));
 
     var expectedScore1 = elo.getExpected(player1.rank, player2.rank);
     var expectedScore2 = elo.getExpected(player2.rank, player1.rank);
 
     var actualScore1 = game.player1_score > game.player2_score ? 1 : 0;
     var actualScore2 = game.player2_score > game.player1_score ? 1 : 0;
+
     player1.rank = elo.updateRating(expectedScore1, actualScore1, player1.rank);
     player2.rank = elo.updateRating(expectedScore2, actualScore2, player2.rank);
+
+    player1.games.push(_.assign(transformGame(game, "player1", "player2"), { rank: player1.rank, win: !!actualScore1 }));
+    player2.games.push(_.assign(transformGame(game, "player2", "player1"), { rank: player2.rank, win: !!actualScore2 }));
   });
 
   _.forEach(players, function (player) {

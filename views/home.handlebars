@@ -1,3 +1,13 @@
+
+
+<div id="legend">
+    <span id="datetime" class="legend-item"></span>
+</div>
+<div id="chart_container">
+    <div id="y_axis"></div>
+    <div id="chart"></div>
+</div>
+
 {{#players}}
     <table class="table table-condensed table-stats table-bordered">
         <thead>
@@ -55,3 +65,10 @@
 {{/players}}
 
 <p>As of {{timestamp}}</p>
+
+
+<script src="lodash.js"></script>
+<script src="d3.js"></script>
+<script src="rickshaw.js"></script>
+<script src="moment.js"></script>
+<script src="presentation.js"></script>

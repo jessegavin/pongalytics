@@ -25,13 +25,24 @@ app.set('views', './views');
 app.use(express.static(__dirname + '/public'));
 
 app.get('/', function(req, res) {
-  viewmodel(req.query.bypassCache)
-    .then(function(model) {
-        res.render('home', model);
-    })
-    .catch(function(error) {
-      throw error;
-    });
+    viewmodel(req.query.bypassCache)
+        .then(function(model) {
+            res.render('home', model);
+        })
+        .catch(function(error) {
+            throw error;
+        });
+});
+
+
+app.get('/data.json', function(req, res) {
+    viewmodel(req.query.bypassCache)
+        .then(function(model) {
+            res.json(model);
+        })
+        .catch(function(error) {
+            throw error;
+        });
 });
 
 app.listen(process.env.PORT || 8080);

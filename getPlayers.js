@@ -29,7 +29,8 @@ function processSpreadsheet(result) {
         rank: p.elo,
         gravatar: gravatarize(p.gravatar),
         opponents : [],
-        games : []
+        games : [],
+        rankHistory: []
       }
     })
     .valueOf();
