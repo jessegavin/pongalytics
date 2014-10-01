@@ -20,7 +20,7 @@ function getSpreadSheetOptions(worksheetName){
     worksheetName: worksheetName,
     oauth: {
       email: process.env.DRIVE_USER,
-      keyFile: process.env.PEM_KEY
+      key: process.env.PEM_KEY
     }
   }
 }
