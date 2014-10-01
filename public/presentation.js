@@ -36,7 +36,7 @@ d3.json("/data.json", function(error, json) {
 
     var graph = new Rickshaw.Graph({
         element: document.querySelector("#chart"),
-        renderer: 'scatterplot',
+        renderer: 'lineplot',
         series: series,
         min: "auto",
         padding: {
