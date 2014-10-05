@@ -45,6 +45,70 @@ function processSpreadsheet(players, scoreData) {
   }
 
   function buildStats(games) {
+
+      var wins = 0;
+      var losses = 0;
+      var points = 0;
+      var aces = 0;
+      var pointsAllowed = 0;
+      var acesAllowed = 0;
+      var pointDifferential = 0;
+
+      var winStreak = 0;
+      var lossStreak = 0;
+      var winStreaks = [];
+      var lossStreaks = [];
+      var overtimeWins = 0;
+      var overtimeLosses = 0;
+
+      var gameStats = _.map(games, function(game, index) {
+          var _gameNumber = index + 1;
+          var _wins =  wins += game.win ? 1 : 0;
+          var _isOvertime = Math.max(game.opponentScore, game.score) > 11;
+
+          overtimeWins += game.win && _isOvertime ? 1 : 0;
+          overtimeLosses += game.win && _isOvertime ? 0 : 1;
+
+          if (index > 0 && games[index-1].win && game.win) {
+              winStreak++;
+          } else {
+              winStreaks.push(winStreak);
+              winStreak = 0;
+          }
+
+          if (index > 0 && !games[index-1].win && !game.win) {
+              lossStreak++;
+          } else {
+              lossStreaks.push(lossStreak);
+              lossStreak = 0;
+          }
+
+          return _.assign(game, {
+              gameNumber: _gameNumber,
+              wins: _wins,
+              losses: losses += game.win 0 : 1,
+              points: points += game.score,
+              aces: aces += game.aces,
+              pointsAllowed: pointsAllowed += game.opponentScore,
+              acesAllowed: acesAllowed += game.opponentAces,
+              pointDifferential: pointDifferential += game.points - game.opponentScore,
+              winPercentage: _wins / _gameNumber,
+              overtime: _isOvertime
+          })
+      });
+
+      return {
+          games: gameStats,
+          currentStats: _.last(gameStats),
+          maxConsecutiveWins: _.max(winStreaks),
+          maxConsecutiveLosses: _.max(lossStreaks),
+          overTimeWins: overtimeWins,
+          overtimeLosses: overtimeLosses,
+          differentialSummary: _.countBy(gameStats, "pointDifferential")
+      };
+  }
+
+  function buildStatsSummary(games) {
     var stats = { games: 0, wins: 0, overtimeWins: 0, losses: 0, points: 0, aces: 0, opponentPoints: 0, opponentAces: 0 };
     var result = _.reduce(games, function (result, game) {
       result.games++;
@@ -84,7 +148,7 @@ function processSpreadsheet(players, scoreData) {
   _.forEach(players, function (player) {
     var opponents = _.groupBy(player.games, "opponentName");
     _.forEach(opponents, function (games, opponent) {
-      player.opponents.push(_.assign({ opponentName: opponent }, buildStats(games)));
+      player.opponents.push(_.assign({ opponentName: opponent }, buildStatsSummary(games)));
     });
 
     player.stats = buildStats(player.games);
