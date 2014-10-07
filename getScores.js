@@ -21,7 +21,7 @@ function processSpreadsheet(players, scoreData) {
     "player2_aces": "7"
   };
 
-  var data = getRows(columns, scoreData.rows, numberOfHeaderRows);
+  var gameData = getRows(columns, scoreData.rows, numberOfHeaderRows);
 
   function getNumber(value) {
     if (_.isUndefined(value)) {
@@ -86,12 +86,13 @@ function processSpreadsheet(players, scoreData) {
           return _.assign(game, {
               gameNumber: _gameNumber,
               wins: _wins,
-              losses: losses += game.win 0 : 1,
+              losses: losses += game.win ? 0 : 1,
               points: points += game.score,
               aces: aces += game.aces,
               pointsAllowed: pointsAllowed += game.opponentScore,
               acesAllowed: acesAllowed += game.opponentAces,
-              pointDifferential: pointDifferential += game.points - game.opponentScore,
+              gameDifferential: game.score - game.opponentScore,
+              pointDifferential: pointDifferential += game.score - game.opponentScore,
               winPercentage: _wins / _gameNumber,
               overtime: _isOvertime
           })
@@ -99,12 +100,18 @@ function processSpreadsheet(players, scoreData) {
 
       return {
           games: gameStats,
-          currentStats: _.last(gameStats),
+          current: _.last(gameStats),
           maxConsecutiveWins: _.max(winStreaks),
           maxConsecutiveLosses: _.max(lossStreaks),
           overTimeWins: overtimeWins,
           overtimeLosses: overtimeLosses,
-          differentialSummary: _.countBy(gameStats, "pointDifferential")
+          differentialSummary: _(gameStats)
+              .countBy("gameDifferential")
+              .map(function(value, key) {
+                return { differential: parseInt(key, 10), count: value };
+              })
+              .sortBy("differential")
+              .valueOf()
       };
   }
 
@@ -128,7 +135,7 @@ function processSpreadsheet(players, scoreData) {
     })
   }
 
-  _.forEach(data, function (game) {
+  _.forEach(gameData, function (game) {
     var player1 = players[game.player1_name];
     var player2 = players[game.player2_name];
 
@@ -152,6 +159,8 @@ function processSpreadsheet(players, scoreData) {
     });
 
     player.stats = buildStats(player.games);
+
+      console.log(JSON.stringify(player.stats, null, 2));
   });
 
   return {

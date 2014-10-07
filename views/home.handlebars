@@ -8,60 +8,32 @@
     <div id="chart"></div>
 </div>
 
+
+
+
 {{#players}}
-    <table class="table table-condensed table-stats table-bordered">
-        <thead>
-          <tr>
-            <td style="width: 80px; height:80px; padding: 0;"><img src="{{gravatar}}" style="display:block"></td>
-            <td colspan="10">
-              <h1>{{name}} <small style="margin-left: 15px;">Elo Rank {{rank}}</small></h1>
-            </td>
-          </tr>
-            <tr>
-                <th></th>
-                <th>Games Played</th>
-                <th>Wins</th>
-                <th>Losses</th>
-                <th>Total Aces</th>
-                <th>Total Points</th>
-                <th>Aces Allowed</th>
-                <th>Points Allowed</th>
-                <th>Win Percentage</th>
-                <th>Points Per Game</th>
-                <th>Point Differential</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr class="highlighted">
-                <th>Career</th>
-                <td class="text-center">{{stats.games}}</td>
-                <td class="text-center">{{stats.wins}}</td>
-                <td class="text-center">{{stats.losses}}</td>
-                <td class="text-center">{{stats.aces}}</td>
-                <td class="text-center">{{stats.points}}</td>
-                <td class="text-center">{{stats.opponentAces}}</td>
-                <td class="text-center">{{stats.opponentPoints}}</td>
-                <td class="text-center">{{percentage stats.winPercentage}}</td>
-                <td class="text-center">{{decimal stats.pointsPerGame}}</td>
-                <td class="text-center">{{numeric stats.pointDifferential}}</td>
-            </tr>
-        {{#opponents}}
-          <tr>
-              <th>{{opponentName}}</th>
-              <td class="text-center">{{games}}</td>
-              <td class="text-center">{{wins}}</td>
-              <td class="text-center">{{losses}}</td>
-              <td class="text-center">{{aces}}</td>
-              <td class="text-center">{{points}}</td>
-              <td class="text-center">{{opponentAces}}</td>
-              <td class="text-center">{{opponentPoints}}</td>
-              <td class="text-center">{{percentage winPercentage}}</td>
-              <td class="text-center">{{decimal pointsPerGame}}</td>
-              <td class="text-center">{{numeric pointDifferential}}</td>
-          </tr>
-        {{/opponents}}
-        </tbody>
-    </table>
+
+    <div class="player">
+        <figure>
+            <img src="{{gravatar}}?s=480" alt="{{name}}"/>
+            <figcaption>{{name}}</figcaption>
+        </figure>
+
+        <dl>
+            <dt>Point Differential</dt>
+            <dd>{{stats.current.pointDifferential}}</dd>
+
+            <dt>Record ({{percentage stats.current.winPercentage}}</dt>
+            <dd>{{stats.current.wins}} wins {{stats.current.losses}} losses</dd>
+
+            <dt>Points Per Game</dt>
+            <dd>{{decimal stats.current.pointsPerGame}}</dd>
+        </dl>
+
+    </div>
+
+
+
 {{/players}}
 
 <p>As of {{timestamp}}</p>

@@ -5,11 +5,6 @@ d3.json("/data.json", function(error, json) {
 
     var colors = ['lightblue', 'steelblue', '#bada55'];
 
-
-    var ranks = _(json.players).flatten("games").pluck("rank").valueOf();
-    var minRank = _.min(ranks) - 25;
-    var maxRank = _.max(ranks) + 25;
-
     var series = _.map(json.players, function(player) {
 
         return {
@@ -54,7 +49,7 @@ d3.json("/data.json", function(error, json) {
         graph: graph,
         orientation: 'left',
         element: document.getElementById('y_axis'),
-    } );
+    });
 
     graph.render();
 
