@@ -13,25 +13,59 @@
 
 {{#players}}
 
-    <div class="player">
-        <figure>
-            <img src="{{gravatar}}?s=480" alt="{{name}}"/>
-            <figcaption>{{name}}</figcaption>
-        </figure>
-
-        <dl>
-            <dt>Point Differential</dt>
-            <dd>{{stats.current.pointDifferential}}</dd>
-
-            <dt>Record ({{percentage stats.current.winPercentage}}</dt>
-            <dd>{{stats.current.wins}} wins {{stats.current.losses}} losses</dd>
-
-            <dt>Points Per Game</dt>
-            <dd>{{decimal stats.current.pointsPerGame}}</dd>
-        </dl>
-
-    </div>
-
+    <table class="table table-condensed table-stats table-bordered">
+        <thead>
+        <tr>
+            <td style="width: 80px; height:80px; padding: 0;"><img src="{{gravatar}}?s=240" style="display:block"></td>
+            <td colspan="10">
+                <h1>{{name}} <small style="margin-left: 15px;">Elo Rank {{rank}}</small></h1>
+            </td>
+        </tr>
+        <tr>
+            <th></th>
+            <th>Games Played</th>
+            <th>Wins</th>
+            <th>Losses</th>
+            <th>Total Aces</th>
+            <th>Total Points</th>
+            <th>Aces Allowed</th>
+            <th>Points Allowed</th>
+            <th>Win Percentage</th>
+            <th>Points Per Game</th>
+            <th>Point Differential</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr class="highlighted">
+            <th>Career</th>
+            <td class="text-center">{{stats.current.games}}</td>
+            <td class="text-center">{{stats.current.wins}}</td>
+            <td class="text-center">{{stats.current.losses}}</td>
+            <td class="text-center">{{stats.current.aces}}</td>
+            <td class="text-center">{{stats.current.points}}</td>
+            <td class="text-center">{{stats.current.opponentAces}}</td>
+            <td class="text-center">{{stats.current.opponentPoints}}</td>
+            <td class="text-center">{{percentage stats.current.winPercentage}}</td>
+            <td class="text-center">{{decimal stats.current.pointsPerGame}}</td>
+            <td class="text-center">{{numeric stats.current.pointDifferential}}</td>
+        </tr>
+        {{#opponents}}
+            <tr>
+                <th>{{opponentName}}</th>
+                <td class="text-center">{{games}}</td>
+                <td class="text-center">{{wins}}</td>
+                <td class="text-center">{{losses}}</td>
+                <td class="text-center">{{aces}}</td>
+                <td class="text-center">{{points}}</td>
+                <td class="text-center">{{opponentAces}}</td>
+                <td class="text-center">{{opponentPoints}}</td>
+                <td class="text-center">{{percentage winPercentage}}</td>
+                <td class="text-center">{{decimal pointsPerGame}}</td>
+                <td class="text-center">{{numeric pointDifferential}}</td>
+            </tr>
+        {{/opponents}}
+        </tbody>
+    </table>
 
 
 {{/players}}
