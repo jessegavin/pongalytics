@@ -1,10 +1,8 @@
 var element = document.querySelector("#chart");
 var timeOffsetInMilliseconds = new Date().getTimezoneOffset() * 60 * -1;
 var json;
-var playerColors;
 
 function renderMainGraph() {
-    var colors = ['lightblue', 'steelblue', '#bada55'];
 
     var series = _.map(json.players, function(player) {
 
@@ -26,7 +24,7 @@ function renderMainGraph() {
                 })
                 .sortBy("x")
                 .valueOf(),
-            color: colors.shift()
+            color: randomColor()
         }
     });
 
@@ -104,7 +102,8 @@ function renderMainGraph() {
 
 
 function renderComparison(player1, player2) {
-    var colors = ['lightblue', 'steelblue', '#bada55'];
+
+    var rc = new RandomColor();
 
     var series = _.map(json.players, function(player) {
 
@@ -126,7 +125,7 @@ function renderComparison(player1, player2) {
                 })
                 .sortBy("x")
                 .valueOf(),
-            color: colors.shift()
+            color: randomColor()
         }
     });
 
@@ -204,10 +203,5 @@ function renderComparison(player1, player2) {
 
 d3.json("/data.json", function(error, response) {
     json = response;
-
-    playerColors = json.players.map(function(player, index) {
-        return colors[index];
-    });
-
     renderMainGraph("#chart");
 });
