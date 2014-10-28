@@ -2,7 +2,22 @@ var element = document.querySelector("#chart");
 var timeOffsetInMilliseconds = new Date().getTimezoneOffset() * 60 * -1;
 var json;
 
+function RandomColor() {
+    var palette = ['red', 'blue', 'green', 'purple', 'orange', 'yellow'];
+    this.get = function() {
+        var paletteHue = palette.shift();
+        if (paletteHue) {
+          return randomColor({
+            hue: paletteHue,
+            luminosity: 'dark'
+          });
+        }
+        return randomColor();
+    }
+}
+
 function renderMainGraph() {
+    var colors = new RandomColor();
 
     var series = _.map(json.players, function(player) {
 
@@ -24,7 +39,7 @@ function renderMainGraph() {
                 })
                 .sortBy("x")
                 .valueOf(),
-            color: randomColor()
+            color: colors.get()
         }
     });
 
@@ -103,7 +118,7 @@ function renderMainGraph() {
 
 function renderComparison(player1, player2) {
 
-    var rc = new RandomColor();
+    var colors = new RandomColor();
 
     var series = _.map(json.players, function(player) {
 
@@ -125,7 +140,7 @@ function renderComparison(player1, player2) {
                 })
                 .sortBy("x")
                 .valueOf(),
-            color: randomColor()
+            color: colors.get()
         }
     });
 
