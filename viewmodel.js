@@ -18,7 +18,9 @@ module.exports = function(bypassCache) {
       _.assign(cache, {
         players: _.chain(data.players)
           .map(function(p, name) {
-            return _.assign(p, { name: name });
+            return _.assign(p, {
+              name: name
+            });
           })
           .sortBy(function(p) {
             return 0-p.rank;
@@ -30,4 +32,3 @@ module.exports = function(bypassCache) {
       return cache;
     });
 }
-

@@ -2,24 +2,28 @@ var element = document.querySelector("#chart");
 var timeOffsetInMilliseconds = new Date().getTimezoneOffset() * 60 * -1;
 var json;
 
-function RandomColor() {
-    var palette = ['red', 'blue', 'green', 'purple', 'orange', 'yellow'];
-    this.get = function() {
-        var paletteHue = palette.shift();
-        if (paletteHue) {
-          return randomColor({
-            hue: paletteHue,
-            luminosity: 'dark'
-          });
-        }
-        return randomColor();
-    }
-}
+var palette = [
+'#66CC99',
+'#66CCCC',
+'#6699CC',
+'#6666CC',
+'#9966CC',
+'#CC66CC',
+'#CC6699',
+'#CC6666',
+'#CC9966',
+'#CCCC66',
+'#99CC66',
+'#66CC66',
+'#3DB87A',
+'#2E8A5C',
+'#B83D7A',
+'#8A2E5C'
+];
 
 function renderMainGraph() {
-    var colors = new RandomColor();
 
-    var series = _.map(json.players, function(player) {
+    var series = _.map(json.players, function(player, index) {
 
         return {
             name: player.name,
@@ -39,7 +43,7 @@ function renderMainGraph() {
                 })
                 .sortBy("x")
                 .valueOf(),
-            color: colors.get()
+            color: palette[index % palette.length]
         }
     });
 
@@ -70,150 +74,56 @@ function renderMainGraph() {
 
     var legend = document.querySelector("#legend");
 
-    var legendItems = series.map(function(s) {
-
-        var line = document.createElement('div');
-        line.className = 'legend-item';
-
-        var swatch = document.createElement('span');
-        swatch.className = 'legend-item__swatch';
-        swatch.style.backgroundColor = s.color;
-
-        var label = document.createElement('span');
-        label.className = 'legend-item__name';
-        label.innerText = s.name;
-
-        var value = document.createElement('span');
-        value.className = 'legend-item__value';
-        value.innerText = '';
-
-        line.appendChild(swatch);
-        line.appendChild(label);
-        line.appendChild(value);
-        legend.appendChild(line);
-
-        return line;
+    var ranks = series.map(function(s) {
+        document.getElementById('name-'+ s.name).style.backgroundColor = s.color;
+        return document.getElementById('rank-'+ s.name);
     });
 
 
     var datetime = document.querySelector("#datetime");
 
-    var Hover = Rickshaw.Class.create(Rickshaw.Graph.HoverDetail, {
-        render: function(args) {
-
-            datetime.innerText = moment.unix(args.domainX).format("LL");
-
-            args.points.sort(function(a, b) { return a.order - b.order }).forEach( function(d, index) {
-
-                legendItems[index].lastChild.innerText = d.value.y;
-                this.show();
-
-            }, this );
-        }
-    });
-
-    var hover = new Hover( { graph: graph } );
-}
-
-
-function renderComparison(player1, player2) {
-
-    var colors = new RandomColor();
-
-    var series = _.map(json.players, function(player) {
-
-        return {
-            name: player.name,
-            data: _(player.games)
-                .map(function(g) {
-                    return {
-                        y: g.rank,
-                        x: g.gameDate
-                    }
-                })
-                .groupBy("x")
-                .map(function(values, key) {
-                    return {
-                        x: (Date.parse(key) / 1000) + timeOffsetInMilliseconds,
-                        y: _.last(values).y
-                    }
-                })
-                .sortBy("x")
-                .valueOf(),
-            color: colors.get()
-        }
-    });
-
-    var graph = new Rickshaw.Graph({
-        element: element,
-        renderer: 'lineplot',
-        series: series,
-        min: "auto",
-        padding: {
-            top: 0.03,
-            bottom: 0.03
-        }
-    });
-
-    var x_axis = new Rickshaw.Graph.Axis.Time( {
-        graph: graph
-    });
+    // var Hover = Rickshaw.Class.create(Rickshaw.Graph.HoverDetail, {
+    //     render: function(args) {
+    //
+    //         datetime.innerText = moment.unix(args.domainX).format("LL");
+    //
+    //         args.points.sort(function(a, b) { return a.order - b.order }).forEach( function(d, index) {
+    //
+    //             ranks[index].innerText = d.value.y;
+    //             this.show();
+    //
+    //         }, this );
+    //     }
+    // });
+    //
+    // var hover = new Hover( { graph: graph } );
 
 
-    var y_axis = new Rickshaw.Graph.Axis.Y( {
+
+    var hoverDetail = new Rickshaw.Graph.HoverDetail( {
         graph: graph,
-        orientation: 'left',
-        element: document.getElementById('y_axis'),
+        yFormatter: function(y) { return Math.floor(y) }
     });
 
-    graph.render();
+    //var hover = new Hover( { graph: graph } );
 
 
-    var legend = document.querySelector("#legend");
+var slider = new Rickshaw.Graph.RangeSlider({
+    graph: graph,
+    element: document.querySelector('#slider')
+});
 
-    var legendItems = series.map(function(s) {
+    var yAxis = document.getElementById("y_axis");
+    var container = document.getElementById("chart_container");
 
-        var line = document.createElement('div');
-        line.className = 'legend-item';
-
-        var swatch = document.createElement('span');
-        swatch.className = 'legend-item__swatch';
-        swatch.style.backgroundColor = s.color;
-
-        var label = document.createElement('span');
-        label.className = 'legend-item__name';
-        label.innerText = s.name;
-
-        var value = document.createElement('span');
-        value.className = 'legend-item__value';
-        value.innerText = '';
-
-        line.appendChild(swatch);
-        line.appendChild(label);
-        line.appendChild(value);
-        legend.appendChild(line);
-
-        return line;
-    });
-
-
-    var datetime = document.querySelector("#datetime");
-
-    var Hover = Rickshaw.Class.create(Rickshaw.Graph.HoverDetail, {
-        render: function(args) {
-
-            datetime.innerText = moment.unix(args.domainX).format("LL");
-
-            args.points.sort(function(a, b) { return a.order - b.order }).forEach( function(d, index) {
-
-                legendItems[index].lastChild.innerText = d.value.y;
-                this.show();
-
-            }, this );
-        }
-    });
-
-    var hover = new Hover( { graph: graph } );
+    var resize = function() {
+      graph.configure({
+        width: container.offsetWidth - yAxis.offsetWidth
+      });
+      graph.render();
+    }
+    window.addEventListener('resize', resize);
+    resize();
 }
 
 d3.json("/data.json", function(error, response) {

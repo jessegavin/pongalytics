@@ -19,8 +19,8 @@ function getSpreadSheetOptions(worksheetName){
     spreadsheetId: "1oT_G_vwbiYuh17TJhdsymFp8-ONbDMS2NckTGJtCZOE",
     worksheetName: worksheetName,
     oauth: {
-      email: process.env.DRIVE_USER,
-      key: process.env.PEM_KEY
+      email: "780272229048-had28ms0egrbau5vsk8nh330jbukos9j@developer.gserviceaccount.com", //process.env.DRIVE_USER,
+      keyFile: "./private/pongalytics.pem" //process.env.PEM_KEY
     }
   }
 }

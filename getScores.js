@@ -105,6 +105,10 @@ function processSpreadsheet(players, scoreData) {
           maxConsecutiveLosses: _.max(lossStreaks),
           overTimeWins: overtimeWins,
           overtimeLosses: overtimeLosses,
+          streak: {
+            count: Math.max(winStreak, lossStreak),
+            type: winStreak > lossStreak ? "Win" : "Loss"
+          },
           differentialSummary: _(gameStats)
               .countBy("gameDifferential")
               .map(function(value, key) {
