@@ -1,0 +1,70 @@
+{
+  "rows": {
+    "1": {
+      "1": "Player Name",
+      "2": "Elo",
+      "3": "Email Address"
+    },
+    "2": {
+      "1": "Jesse",
+      "2": 1000,
+      "3": "jesse.gavin@gmail.com"
+    },
+    "3": {
+      "1": "Chris",
+      "2": 1000,
+      "3": "chr.montgomery@gmail.com"
+    },
+    "4": {
+      "1": "Terry",
+      "2": 1000,
+      "3": "terguan@gmail.com"
+    },
+    "5": {
+      "1": "Scott",
+      "2": 1000,
+      "3": "scott.canham@gmail.com"
+    },
+    "6": {
+      "1": "Bob",
+      "2": 1000,
+      "3": "bob.galuska@gmail.com"
+    },
+    "7": {
+      "1": "Phil",
+      "2": 1000,
+      "3": "whipps@gmail.com"
+    },
+    "8": {
+      "1": "Dustin",
+      "2": 1000,
+      "3": "dsditt@gmail.com"
+    },
+    "9": {
+      "1": "Dave",
+      "2": 1000,
+      "3": "david.tinnes@dowjones.com"
+    },
+    "10": {
+      "1": "Jeff",
+      "2": 1000,
+      "3": "jacksonjef@gmail.com"
+    },
+    "11": {
+      "1": "TJ",
+      "2": 1000,
+      "3": "slaptoast@gmail.com"
+    }
+  },
+  "info": {
+    "spreadsheetId": "1oT_G_vwbiYuh17TJhdsymFp8-ONbDMS2NckTGJtCZOE",
+    "worksheetId": "okbnnyp",
+    "worksheetTitle": "Players",
+    "worksheetUpdated": "2014-10-30T22:12:03.568Z",
+    "authors": "jesse.gavin",
+    "totalCells": 33,
+    "totalRows": 11,
+    "lastRow": 11,
+    "nextRow": 12
+  }
+}
