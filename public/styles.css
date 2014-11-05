@@ -97,6 +97,11 @@ body {
   position: relative;
   padding-left: 100px;
   border-radius: 10px;
+  border: 1px solid transparent;
+}
+.player:hover {
+  cursor: pointer;
+  border: 1px solid #ffffcc;
 }
 
 .player:after {
