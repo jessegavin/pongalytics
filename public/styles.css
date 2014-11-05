@@ -163,3 +163,16 @@ body {
 .muted {
   opacity: .8;
 }
+
+.movers {
+  padding: 1px 23px 21px;
+  background-color: #ccc;
+}
+
+.elo-change-value {
+  padding-left: 15px;
+}
+
+.timestamp {
+  margin: 23px 0 0 23px;
+}

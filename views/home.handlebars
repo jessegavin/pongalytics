@@ -87,9 +87,20 @@
   {{/players}}
 </div>
 
+<div class="movers">
+  <h2>Recent Movers</h2>
+  <table>
+    <tr></tr>
+    {{#movers}}
+      <tr>
+        <td>{{playerName}}</td>
+        <td class="elo-change-value" style="{{style}}">{{eloChange}}</td>
+      </tr>
+    {{/movers}}
+  </table>
+</div>
 
-<p>As of {{timestamp}}</p>
-
+<p class="timestamp">As of {{timestamp}}</p>
 
 <script src="lodash.js"></script>
 <script src="d3.js"></script>

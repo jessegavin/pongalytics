@@ -141,6 +141,16 @@ function processSpreadsheet(players, scoreData) {
     })
   }
 
+  function buildMovers(games) {
+    return _.chain(_.union(_.pluck(games, 'player1_name'), _.pluck(games, 'player2_name')))
+      .map(function (player) {
+        return {
+          playerName: player,
+          eloChange: players[player].rank - players[player].previousRank
+        };
+      }).value();
+  }
+
   _.forEach(gameData, function (game) {
     var player1 = players[game.player1_name];
     var player2 = players[game.player2_name];
@@ -151,6 +161,8 @@ function processSpreadsheet(players, scoreData) {
     var actualScore1 = game.player1_score > game.player2_score ? 1 : 0;
     var actualScore2 = game.player2_score > game.player1_score ? 1 : 0;
 
+    player1.previousRank = player1.rank || expectedScore1;
+    player2.previousRank = player2.rank || expectedScore2;
     player1.rank = elo.updateRating(expectedScore1, actualScore1, player1.rank);
     player2.rank = elo.updateRating(expectedScore2, actualScore2, player2.rank);
 
@@ -171,7 +183,8 @@ function processSpreadsheet(players, scoreData) {
 
   return {
     lastUpdated: info.worksheetUpdated,
-    players: players
+    players: players,
+    movers: buildMovers(_.last(gameData, 10))
   };
 }
 

@@ -26,7 +26,17 @@ module.exports = function(bypassCache) {
             return 0-p.rank;
           })
           .valueOf(),
-        timestamp: new Date()
+        timestamp: new Date(),
+        movers: _.chain(data.movers)
+          .map(function(m) {
+            m.style = (m.eloChange === 0) ? '' : m.eloChange > 0 ? "color:green" : "color:red";
+            return m;
+          })
+          .sortBy(function(p) {
+            return Math.abs(0-p.eloChange);
+          })
+          .reverse()
+          .value()
       });
 
       return cache;
