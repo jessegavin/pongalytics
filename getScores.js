@@ -46,83 +46,83 @@ function processSpreadsheet(players, scoreData) {
 
   function buildStats(games) {
 
-      var career = {
-        total: 0,
-        aces: 0,
-        wins: 0,
-        losses: 0,
-        points: 0,
-        acesAllowed: 0,
-        pointsAllowed: 0,
-        avgPointsPerGame: 0,
-        pointDifferential: 0
-      };
+    var career = {
+      total: 0,
+      aces: 0,
+      wins: 0,
+      losses: 0,
+      points: 0,
+      acesAllowed: 0,
+      pointsAllowed: 0,
+      avgPointsPerGame: 0,
+      pointDifferential: 0
+    };
 
-      var winStreak = 0;
-      var lossStreak = 0;
-      var winStreaks = [];
-      var lossStreaks = [];
-      var overtimeWins = 0;
-      var overtimeLosses = 0;
+    var winStreak = 0;
+    var lossStreak = 0;
+    var winStreaks = [];
+    var lossStreaks = [];
+    var overtimeWins = 0;
+    var overtimeLosses = 0;
 
-      var gameStats = _.map(games, function(game, index) {
-          career.total++;
-          career.aces += game.aces;
-          career.wins += game.win ? 1 : 0;
-          career.losses += game.win ? 0 : 1;
-          career.points += game.score;
-          career.acesAllowed += game.opponentAces;
-          career.pointsAllowed += game.opponentScore;
-          career.pointDifferential += game.score - game.opponentScore;
+    var gameStats = _.map(games, function (game, index) {
+      career.total++;
+      career.aces += game.aces;
+      career.wins += game.win ? 1 : 0;
+      career.losses += game.win ? 0 : 1;
+      career.points += game.score;
+      career.acesAllowed += game.opponentAces;
+      career.pointsAllowed += game.opponentScore;
+      career.pointDifferential += game.score - game.opponentScore;
 
-          var _isOvertime = Math.max(game.opponentScore, game.score) > 11;
+      var _isOvertime = Math.max(game.opponentScore, game.score) > 11;
 
-          overtimeWins += game.win && _isOvertime ? 1 : 0;
-          overtimeLosses += game.win && _isOvertime ? 0 : 1;
+      overtimeWins += game.win && _isOvertime ? 1 : 0;
+      overtimeLosses += game.win && _isOvertime ? 0 : 1;
 
-          if (game.win) {
-              winStreak++;
-              lossStreak = 0;
-              lossStreaks.push(lossStreak);
-          } else {
-              lossStreak++;
-              winStreak = 0;
-              winStreaks.push(winStreak);
-          }
+      if (game.win) {
+        winStreak++;
+        lossStreak = 0;
+        lossStreaks.push(lossStreak);
+      } else {
+        lossStreak++;
+        winStreak = 0;
+        winStreaks.push(winStreak);
+      }
 
-          return _.assign(game, {
-              gameDifferential: game.score - game.opponentScore,
-              overtime: _isOvertime
-          })
-      });
+      return _.assign(game, {
+        gameDifferential: game.score - game.opponentScore,
+        overtime: _isOvertime
+      })
+    });
 
-      career.avgPointsPerGame = career.points / career.total;
-      career.winPercentage = career.wins / career.total;
+    career.avgPointsPerGame = career.points / career.total;
+    career.winPercentage = career.wins / career.total;
 
-      return {
-          career: career,
-          games: gameStats,
-          maxConsecutiveWins: _.max(winStreaks),
-          maxConsecutiveLosses: _.max(lossStreaks),
-          overTimeWins: overtimeWins,
-          overtimeLosses: overtimeLosses,
-          streak: {
-            count: Math.max(winStreak, lossStreak),
-            type: (winStreak === lossStreak) ? '' : winStreak > lossStreak ? "W" : "L",
-            style: (winStreak === lossStreak) ? '' : winStreak > lossStreak ? "color:green" : "color:red"
-          },
-          differentialSummary: _(gameStats)
-              .countBy("gameDifferential")
-              .map(function(value, key) {
-                return { differential: parseInt(key, 10), count: value };
-              })
-              .sortBy("differential")
-              .valueOf()
-      };
+    return {
+      career: career,
+      games: gameStats,
+      maxConsecutiveWins: _.max(winStreaks),
+      maxConsecutiveLosses: _.max(lossStreaks),
+      overTimeWins: overtimeWins,
+      overtimeLosses: overtimeLosses,
+      streak: {
+        count: Math.max(winStreak, lossStreak),
+        type: (winStreak === lossStreak) ? '' : winStreak > lossStreak ? "W" : "L",
+        style: (winStreak === lossStreak) ? '' : winStreak > lossStreak ? "color:green" : "color:red"
+      },
+      differentialSummary: _(gameStats)
+        .countBy("gameDifferential")
+        .map(function (value, key) {
+          return {differential: parseInt(key, 10), count: value};
+        })
+        .sortBy("differential")
+        .valueOf()
+    };
   }
 
   function buildStatsSummary(games) {
-    var stats = { games: 0, wins: 0, overtimeWins: 0, losses: 0, points: 0, aces: 0, opponentPoints: 0, opponentAces: 0 };
+    var stats = {games: 0, wins: 0, overtimeWins: 0, losses: 0, points: 0, aces: 0, opponentPoints: 0, opponentAces: 0};
     var result = _.reduce(games, function (result, game) {
       result.games++;
       result.wins += game.score > game.opponentScore ? 1 : 0;
@@ -154,19 +154,19 @@ function processSpreadsheet(players, scoreData) {
     player1.rank = elo.updateRating(expectedScore1, actualScore1, player1.rank);
     player2.rank = elo.updateRating(expectedScore2, actualScore2, player2.rank);
 
-    player1.games.push(_.assign(transformGame(game, "player1", "player2"), { rank: player1.rank, win: !!actualScore1 }));
-    player2.games.push(_.assign(transformGame(game, "player2", "player1"), { rank: player2.rank, win: !!actualScore2 }));
+    player1.games.push(_.assign(transformGame(game, "player1", "player2"), {rank: player1.rank, win: !!actualScore1}));
+    player2.games.push(_.assign(transformGame(game, "player2", "player1"), {rank: player2.rank, win: !!actualScore2}));
   });
 
   _.forEach(players, function (player) {
     var opponents = _.groupBy(player.games, "opponentName");
     _.forEach(opponents, function (games, opponent) {
-      player.opponents.push(_.assign({ opponentName: opponent }, buildStatsSummary(games)));
+      player.opponents.push(_.assign({opponentName: opponent}, buildStatsSummary(games)));
     });
 
     player.stats = buildStats(player.games);
 
-      console.log(JSON.stringify(player.stats, null, 2));
+    //console.log(JSON.stringify(player.stats, null, 2));
   });
 
   return {
@@ -180,4 +180,4 @@ module.exports = function () {
     getPlayers(),
     spreadsheet("Scores")
   ]).spread(processSpreadsheet);
-}
+};
