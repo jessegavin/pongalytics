@@ -30,6 +30,7 @@ module.exports = function(bypassCache) {
         movers: _.chain(data.movers)
           .map(function(m) {
             m.style = (m.eloChange === 0) ? '' : m.eloChange > 0 ? "color:green" : "color:red";
+            m.eloChangeDisplay = m.eloChange > 0 ? '+' + m.eloChange : m.eloChange;
             return m;
           })
           .sortBy(function(p) {
