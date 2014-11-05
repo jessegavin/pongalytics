@@ -112,7 +112,8 @@ function processSpreadsheet(players, scoreData) {
           overtimeLosses: overtimeLosses,
           streak: {
             count: Math.max(winStreak, lossStreak),
-            type: winStreak > lossStreak ? "Win" : "Loss"
+            type: (winStreak === lossStreak) ? '' : winStreak > lossStreak ? "W" : "L",
+            style: (winStreak === lossStreak) ? '' : winStreak > lossStreak ? "color:green" : "color:red"
           },
           differentialSummary: _(gameStats)
               .countBy("gameDifferential")

@@ -21,10 +21,14 @@
 
         <div class="data-pair player__record">
           <span class="data-pair__label">Record</span>
-            <span class="data-pair__value">
-              {{numeric stats.career.wins}} / {{numeric stats.career.losses}}
-              <span class="muted">{{percentage stats.career.winPercentage}}</span>
-            </span>
+          <span class="data-pair__value">
+            {{numeric stats.career.wins}} / {{numeric stats.career.losses}}
+            <span class="muted">{{percentage stats.career.winPercentage}}</span>
+          </span>
+
+          <div class="data-pair__value">
+            Streak: <span style="{{stats.streak.style}};">{{numeric stats.streak.count}} {{stats.streak.type}}</span>
+          </div>
         </div>
       </div>
 
