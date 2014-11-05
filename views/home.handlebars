@@ -22,8 +22,8 @@
         <div class="data-pair player__record">
           <span class="data-pair__label">Record</span>
             <span class="data-pair__value">
-              {{stats.current.wins}} / {{stats.current.losses}}
-              <span class="muted">{{percentage stats.current.winPercentage}}</span>
+              {{numeric stats.career.wins}} / {{numeric stats.career.losses}}
+              <span class="muted">{{percentage stats.career.winPercentage}}</span>
             </span>
         </div>
       </div>
@@ -41,23 +41,23 @@
             <th>Aces Allowed</th>
             <th>Points Allowed</th>
             <th>Win Percentage</th>
-            <th>Points Per Game</th>
+            <th>Avg Points Per Game</th>
             <th>Point Differential</th>
           </tr>
           </thead>
           <tbody>
           <tr class="highlighted">
             <th>Career</th>
-            <td class="text-center">{{stats.current.games}}</td>
-            <td class="text-center">{{stats.current.wins}}</td>
-            <td class="text-center">{{stats.current.losses}}</td>
-            <td class="text-center">{{stats.current.aces}}</td>
-            <td class="text-center">{{stats.current.points}}</td>
-            <td class="text-center">{{stats.current.opponentAces}}</td>
-            <td class="text-center">{{stats.current.opponentPoints}}</td>
-            <td class="text-center">{{percentage stats.current.winPercentage}}</td>
-            <td class="text-center"></td>
-            <td class="text-center">{{numeric stats.current.pointDifferential}}</td>
+            <td class="text-center">{{numeric stats.career.total}}</td>
+            <td class="text-center">{{numeric stats.career.wins}}</td>
+            <td class="text-center">{{numeric stats.career.losses}}</td>
+            <td class="text-center">{{numeric stats.career.aces}}</td>
+            <td class="text-center">{{numeric stats.career.points}}</td>
+            <td class="text-center">{{numeric stats.career.acesAllowed}}</td>
+            <td class="text-center">{{numeric stats.career.pointsAllowed}}</td>
+            <td class="text-center">{{percentage stats.career.winPercentage}}</td>
+            <td class="text-center">{{decimal stats.career.avgPointsPerGame}}</td>
+            <td class="text-center">{{numeric stats.career.pointDifferential}}</td>
           </tr>
           {{#opponents}}
             <tr>
