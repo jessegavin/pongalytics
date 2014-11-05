@@ -80,18 +80,14 @@ function processSpreadsheet(players, scoreData) {
           overtimeWins += game.win && _isOvertime ? 1 : 0;
           overtimeLosses += game.win && _isOvertime ? 0 : 1;
 
-          if (index > 0 && games[index-1].win && game.win) {
+          if (game.win) {
               winStreak++;
-          } else {
-              winStreaks.push(winStreak);
-              winStreak = 0;
-          }
-
-          if (index > 0 && !games[index-1].win && !game.win) {
-              lossStreak++;
-          } else {
-              lossStreaks.push(lossStreak);
               lossStreak = 0;
+              lossStreaks.push(lossStreak);
+          } else {
+              lossStreak++;
+              winStreak = 0;
+              winStreaks.push(winStreak);
           }
 
           return _.assign(game, {
